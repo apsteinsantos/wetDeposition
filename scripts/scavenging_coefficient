@@ -32,12 +32,12 @@ p_air_min = 0
 p_air_max = 1
 p_air = (p_air_max-p_air_min)*np.random.rand(1000) + p_air_min #densidade do ar g*cm−3
 
-mi_air_min = 0
-mi_air_max = 1
-mi_air = (mi_air_max-mi_air_min)*np.random.rand(1000) + mi_air_min #viscosidade do car g*cm−1*s−1]
+mu_air_min = 0
+mu_air_max = 1
+mu_air = (mu_air_max-mu_air_min)*np.random.rand(1000) + mu_air_min #viscosidade do ar g*cm−1*s−1]
 
 ## Mass transfer coefficient equation, Kc
-Kc = Dg/Dp*(2+0.6*((p_air*Dp*Vd/mi_air)**0.5)*((mi_air/(p_air*Dg))**(1/3)))
+Kc = Dg/Dp*(2+0.6*((p_air*Dp*Vd/mi_air)**0.5)*((mu_air/(p_air*Dg))**(1/3)))
 
 ## Scavenging coefficient, Λ
 Λ = np.pi*Dp**2*Kc*np.exp((-6.0 * Kc * z) / (Dp * Vd * H * R * T))
