@@ -1,0 +1,43 @@
+import numpy as np
+## Raindrop diameter, Dp - (Serio et al, 2019) https://doi.org/10.1016/j.jhydrol.2019.06.040
+Dp_min = 0 #cm
+Dp_max = 0.6 #cm
+Dp = (Dp_max-Dp_min)*np.random.rand(1000) + Dp_min #raindrop diameter
+
+## Rain height, z
+z_min = 120 #altura do coletor cm
+z_max = 20000 #cm
+z = (z_max-z_min)*np.random.rand(1000) + z_min
+
+# Raindrop velocity in diameter function , Vd - (Dijk, et al., 2002) https://doi.org/10.1016/S0022-1694(02)00020-3
+Vd_min = 0.0561*Dp_min**3 - 0.912*Dp_min**2 + 5.03*Dp_min - 0.254
+Vd_max = 0.0561*Dp_max**3 - 0.912*Dp_max**2 + 5.03*Dp_max - 0.254
+Vd = (Vd_max - Vd_min)*np.random.rand(1000) + Vd_min #velocidade da gota cm*s−1
+
+## Temperatura, T
+T_min = 275
+T_max = 310
+T = (T_max-T_min)*np.random.rand(1000) + T_min  #temp Kelvin
+
+## Constants
+H = 1.45E-02 # Cte Henry
+R = 0.082 #cte molar
+
+## Mass transfer coefficient variables
+Dg_min = 0
+Dg_max = 1
+Dg = (Dg_max-Dg_min)*np.random.rand(1000) + Dg_min  #difusibilidade das espécies químicas cm2*s−1
+
+p_air_min = 0
+p_air_max = 1
+p_air = (p_air_max-p_air_min)*np.random.rand(1000) + p_air_min #densidade do ar g*cm−3
+
+mi_air_min = 0
+mi_air_max = 1
+mi_air = (mi_air_max-mi_air_min)*np.random.rand(1000) + mi_air_min #viscosidade do car g*cm−1*s−1]
+
+## Mass transfer coefficient equation, Kc
+Kc = Dg/Dp*(2+0.6*((p_air*Dp*Vd/mi_air)**0.5)*((mi_air/(p_air*Dg))**(1/3)))
+
+## Scavenging coefficient, Λ
+Λ = np.pi*Dp**2*Kc*np.exp((-6.0 * Kc * z) / (Dp * Vd * H * R * T))
